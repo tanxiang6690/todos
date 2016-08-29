@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" ng-app="todo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Todos-记事本</title>
+    <link rel="stylesheet" href="css/index.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/angular.js"></script>
+    <script src="js/angular-animate.js"></script>
+    <script src="js/main.js"></script>
+</head>
+<body ng-controller="mian">
+<div class="tobos">
+    <h1>{{title}}</h1>
+    <div class="tobo">
+        <div class="header">
+            <input type="text" placeholder="您要做什么?" ng-model="name" ng-keyup="add($event);save()">
+        </div>
+        <ul class="content" ng-init=" tiaojian=''">
+            <li class="inner"
+                ng-repeat="v in todos | filter:{isDone:tiaojian} track by v.id"
+                ng-class="{wangcheng:v.isDone,bianji:ed}"
+                ng-click="focus($event);save()"
+                ng-init="ed=false"
+            >
+                <div class="check" ng-click="v.isDone=!v.isDone;save()">✓</div>
+                <p ng-click="ed=true">{{v.name}}</p>
+                <input type="text"  ng-model="v.name" ng-blur="ed=false" ng-change="save()">
+            <div class="delete" ng-click="delete(v.id);save()">⨉</div>
+        </li>
+        </ul>
+        <ul class="footer">
+            <li class="lenght"><p>{{(todos|filter:{isDone:tiaojian}).length}}</p><span>条信息</span></li>
+            <li class="inner">
+                <div class="box" ng-class="{red:tiaojian===''}" ng-click="tiaojian='';setcount('all')">All</div>
+                <div class="active"  ng-class="{red:tiaojian===false}" ng-click="tiaojian=false;setcount('active')">未完成</div>
+                <div class="Completed" ng-class="{red:tiaojian===true}" ng-click="tiaojian=true ;setcount('complete')">已完成</div>
+            </li>
+            <li ng-click="clear();save()">清除</li>
+        </ul>
+    </div>
+    <div class="text">
+        <p>双击可以编辑信息</p>
+        <p>单击左边"✔"表示已处理完成信息</p>
+        <p>单击右边"✘"表示删除当前信息</p>
+        <p>"All"表示已记录的全部信息</p>
+        <p>"未完成"表示还没有处理完成的信息</p>
+        <p>"已完成"表示已经处理完成的信息</p>
+        <p>"清除"表示清楚已经处理完成的全部信息</p>
+    </div>
+</div>
+</body>
+</html>
